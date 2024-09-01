@@ -1,5 +1,18 @@
 # 2020 Pennsylvania General Election Mail Ballot Data Analysis
 ### Table of Contents
+- [Overview](#Overview)
+  - [Summary](#Summary)
+  - [Data Source](#Data-Source)
+  - [Tools](#Tools)
+  - [Data Dictionary](#Data-Dictionary)
+  - [Objectives](#Objectives)
+  - [References](#References)
+- [Data Cleaning and Manipulation](#data-cleaning-and-manipulation)
+- [Exploratory Data Analysis](#exploratory-data-analysis)
+  - [Descriptive Statistics](#Descriptive-Statistics)
+- [Insights](#insights)
+- [Contributing](#contributing)
+- [License](#license)
 
 
 ## Overview
@@ -30,10 +43,6 @@
 
 
 ## Exploratory Data Analysis
-
-
-
-
 ### Descriptive Statistics
 
 
