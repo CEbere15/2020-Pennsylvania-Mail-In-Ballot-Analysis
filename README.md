@@ -39,6 +39,14 @@
 
 
 ## Data Cleaning and Preparation
+### Date Parsing
+#### Handling Outliers
+
+### Calculating Ages
+
+
+### Generation Assignment
+
 
 
 
@@ -46,9 +54,31 @@
 ### Descriptive Statistics
 
 
+### Distribution Analysis
 
 
+
+### Time Series Analysis
+
+### Party Prevalence Analysis 
 ## Data Analysis
+### Voter Turnout Analysis
+
+
+### Application Process Efficiency Analysis
+
+### Time Interval Analysis
+
+#### Partywise Time Interval Analysis
+### Age and Voting Behavior Analysis
+
+### Generational Voting Patterns
+### Application Type Analysis
+
+
+### Geospatial Analysis
+
+### Trend Analysis
 
 
 ## Results
