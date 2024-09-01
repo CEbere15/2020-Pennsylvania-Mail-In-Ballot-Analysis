@@ -10,8 +10,8 @@
 - [Data Cleaning and Manipulation](#data-cleaning-and-preparation)
 - [Exploratory Data Analysis](#exploratory-data-analysis)
   - [Descriptive Statistics](#Descriptive-Statistics)
-- [Insights](#insights)
-- [Contributing](#contributing)
+- [Data Analysis](#data-analysis)
+- [Results](#results)
 - [License](#license)
 
 
