@@ -16,7 +16,16 @@
 
 
 ## Overview
+
 ### Summary
+This data analysis project aims to analyze and draw insights into the Pennsylvanian mail ballot application requests made for the 2020 General Election. Requests that were recorded by the Pennsylvanian Department of State. By doing so, we seek to get a better understanding of the trends brought from these requests, and how they are affected by different aspects of the people making them and where they live. 
+
+### Objectives 
+- Find whether party registration of the requester has any affect on how long it takes for their mail ballot to be received
+- Find whether the county, congressional or state district that the person who is requesting a mail in ballot affects how long it takes for their request to be processed
+- Find whether age and the requester's generation has an affect on whether a person chooses to make their request online, overseas, by mail or on paper
+- Find whether a specific party made requests for mail ballots more than others did  
+
 ### Data Source
 ### Tools
 
@@ -34,9 +43,33 @@
 | `State House District`      | Text     | The Pennsylvania House of Representatives district in which the voter is located.|
 | `State Senate District`      | Text     | The Pennsylvania Senate district in which the voter is located.|
 | `Congressional District`      | Text     | The Congressional District district in which the voter is located.|
-### Objectives
-### References
+### Further Definitions
 
+
+
+#### Mail Application Types
+- **MAILIN**: A mail-in ballot application
+- **OLMAILV**: A mail ballot application that was submitted online
+- **OLREGV**: A civilian absentee ballot application that was submitted online
+- **CVO**: An absentee ballot application for an overseas civilian voter
+- **ALT**: An alternative ballot application where voters who are 65 years of age and the polling place may not be fully accessible
+- **BV**: Bedridden Veteran
+- **C**: An absentee ballot application issued during the emergency absentee period
+- **CIV**: A civilian absentee ballot application that was submitted via paper
+- **CRI**: An absentee ballot application for an overseas civilian voter in a remote/isolated location
+- **F**: An absentee application for an individual who qualifies to vote for federal offices in federal election years
+- **M**: An absentee ballot application for a military voter
+- **MRI**: An absentee ballot application for a military voter in a remote/isolated location
+- **OLMAILNV**: Online Mail-In Ballot Application (Not Verified)
+- **OLREGNV**: Online Regular Absentee Ballot Application (Not Verified)
+- **PER**: An absentee ballot application where a voter has requested permanent status
+- **PMI**: A mail ballot application where the voter has requested permanent status
+- **REG**: An absentee ballot application that was submitted via paper
+- **V**: Veteran (Not Verified)
+- **BVRI**: Bedridden Veteran - Remote/Isolated 
+
+### References
+- 
 
 ## Data Cleaning and Preparation
 ### Date Parsing
