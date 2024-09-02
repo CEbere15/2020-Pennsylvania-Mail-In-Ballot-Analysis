@@ -7,7 +7,7 @@
   - [Data Dictionary](#Data-Dictionary)
   - [Objectives](#Objectives)
   - [References](#References)
-- [Data Cleaning and Manipulation](#data-cleaning-and-preparation)
+- [Data Cleaning and Manipulation](#data-cleaning-and-manipulation)
 - [Exploratory Data Analysis](#exploratory-data-analysis)
   - [Descriptive Statistics](#Descriptive-Statistics)
 - [Data Analysis](#data-analysis)
