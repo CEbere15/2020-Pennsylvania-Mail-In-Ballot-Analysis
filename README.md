@@ -33,7 +33,7 @@
 | `Ballot Returned Date`      | Datetime     | The date the county marked the ballot as received after the voter mailed it back to the county.|
 | `State House District`      | Text     | The Pennsylvania House of Representatives district in which the voter is located.|
 | `State Senate District`      | Text     | The Pennsylvania Senate district in which the voter is located.|
-| `Congressional District`      | Text     | The Congressiional District district in which the voter is located.|
+| `Congressional District`      | Text     | The Congressional District district in which the voter is located.|
 ### Objectives
 ### References
 
