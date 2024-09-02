@@ -71,7 +71,7 @@ This data analysis project aims to analyze and draw insights into the Pennsylvan
 ### References
 - 
 
-## Data Cleaning and Preparation
+## Data Cleaning and Manipulation
 ### Date Parsing
 #### Handling Outliers
 
