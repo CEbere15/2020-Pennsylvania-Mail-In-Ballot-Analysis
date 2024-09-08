@@ -87,12 +87,39 @@ County, Congressional, State Senate, State House Supplementary: A group of suppl
 
 ## Data Cleaning and Manipulation
 ### Date Parsing
+In order to better analyze the dates in SQL, we need
+
+```sql
+-- Change all the date columns from MM/DD/YYYY to YYYY-MM-DD.
+UPDATE Playground
+SET 
+    DateofBirth = SUBSTR(DateofBirth, 7, 4) || '-' || SUBSTR(DateofBirth, 1, 2) || '-' || SUBSTR(DateofBirth, 4, 2),
+    ApplicationApprovedDate = SUBSTR(ApplicationApprovedDate, 7, 4) || '-' || SUBSTR(ApplicationApprovedDate, 1, 2) || '-' || SUBSTR(ApplicationApprovedDate, 4, 2),
+    ApplicationReturnDate = SUBSTR(ApplicationReturnDate, 7, 4) || '-' || SUBSTR(ApplicationReturnDate, 1, 2) || '-' || SUBSTR(ApplicationReturnDate, 4, 2),
+    BallotMailedDate = SUBSTR(BallotMailedDate, 7, 4) || '-' || SUBSTR(BallotMailedDate, 1, 2) || '-' || SUBSTR(BallotMailedDate, 4, 2),
+    BallotReturnedDate = SUBSTR(BallotReturnedDate, 7, 4) || '-' || SUBSTR(BallotReturnedDate, 1, 2) || '-' || SUBSTR(BallotReturnedDate, 4, 2);
+
+```
+
+
 #### Handling Outliers
+
 
 ### Calculating Ages
 
 
+
+
 ### Generation Assignment
+To find the generation that each applicant belongs to, it is best that we make a column for their birth year.
+```sql
+-- Creates the birth year column
+ALTER TABLE Jou ADD COLUMN BirthYear INTEGER;
+
+
+-- Makes the value of the column the year that the person was born
+Update Jou set BirthYear = SUBSTR(DateofBirth, 1, 4);
+```
 
 
 
