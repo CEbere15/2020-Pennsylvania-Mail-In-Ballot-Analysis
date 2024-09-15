@@ -7,7 +7,7 @@
   - [Data Dictionary](#Data-Dictionary)
   - [Objectives](#Objectives)
   - [References](#References)
-- [Data Cleaning and Manipulation](#data-cleaning-and-manipulation)
+- [Data Cleaning and Preparation](#data-cleaning-and-preparation)
 - [Exploratory Data Analysis](#exploratory-data-analysis)
   - [Descriptive Statistics](#Descriptive-Statistics)
 - [Data Analysis](#data-analysis)
@@ -85,7 +85,7 @@ County, Congressional, State Senate, State House Supplementary: A group of suppl
 
 
 
-## Data Cleaning and Manipulation
+## Data Cleaning and Preparation
 ### Renaming the Dataset
 For the sake of simplifying our SQL queries, we should rename the dataset into something shorter instead.
 ```sql
@@ -270,7 +270,9 @@ SELECT PoliticalPartyDescription, ApplicantPartyDesignation, COUNT(*) AS count
 FROM GeneralBallots
 inner join [Party Codes] on [Party Codes].Code = GeneralBallots.ApplicantPartyDesignation
 GROUP BY [ApplicantPartyDesignation] order by Count desc;
+
 ```
+
 ![Des and Name Check](https://github.com/user-attachments/assets/593508f2-c55e-4e32-934e-6370cc465e93)
 
 
@@ -309,22 +311,36 @@ As we can see, the Category column matches up with the designation.
 To better analyze the different methods of mail in voting that were applied for, it is best we group them into categories such as paper, mailed, overseas and online. The following query will create a column for Application Category and populate it by what the Application Type is.
 
 ```sql
--- Create a column for Party Category
+-- Create a column for Application Category
 ALTER TABLE GeneralBallots ADD COLUMN [Application Category] INTEGER;
 
--- Populating the party category by setting them by party designation
+-- Populating the application category based on application type
 UPDATE GeneralBallots
 SET [Application Category] = 
-Case when MailApplicationType in 'D' then 'Democratic'
-when ApplicantPartyDesignation in ('GOP','R') then 'Republican'
-when ApplicantPartyDesignation in ('NF','I','NOP','NO','OTH','INDE','NON') then 'Independent'
-when ApplicantPartyDesignation in ('GPUS','GR','GP') then 'Green'
-when ApplicantPartyDesignation in ('LN') then 'Libertarian'
-else 'Minor Party' end```
+Case when MailApplicationType in ('OLREGNV', 'OLMAILNV', 'OLREGV', 'OLMAILV') then 'Online'
+when MailApplicationType in ('REG','CIV') then 'Paper'
+when MailApplicationType in ('MAILIN','PMI', 'F','BV', 'V', 'PER','ALT','BV','M', 'C', 'ALT') then 'Mailed/Absentee'
+when MailApplicationType in ('CVO', 'CRI', 'MRI', 'BVRI') then 'Overseas/Remote or Isolated'
+End;
+
+```
+
+</br>
+
+Now to make sure the categorization worked.
+
+```sql
+-- Testing the application type categorization
+Select CountyName, MailApplicationType, [Application Category] from GeneralBallots limit 10;
+```
+
+</br>
 
 
 
+![Categorization Application Test](https://github.com/user-attachments/assets/efb5b5a9-6b82-45ab-a382-17e5d1dcafb3)
 
+As we can see the case statement ran correctly.
 
 
 ## Exploratory Data Analysis
@@ -334,8 +350,38 @@ else 'Minor Party' end```
 
 
 ### Distribution Analysis
+#### Age
+```py
+# Histogram for Ages
+plt.subplots(figsize=(75,45))
+sns.histplot(data.query("Generation != 'Unknown'")['Age'], bins=20, kde=True) # Data filtered so that anyone in an unknown generation due to having an age that was designated as too high, is not in the histogram
+plt.title('Distribution of Age')
+plt.show()
+```
+![Age Distributiion](https://github.com/user-attachments/assets/c11983a8-3869-4769-9872-bebf78277147)
+
 
 ### Univariate Analysis 
+#### Congressional Districts
+
+```py
+# Creation of an order for Congreessional Districts by Applications
+ConOrd = data['CongressionalDistrict'].value_counts().index
+
+# Creating a figure size for the count plot
+plt.figure(figsize=(20, 16))
+
+# Creating the Countplot
+sns.countplot(y='CongressionalDistrict', data=data, order=ConOrd, palette='crest')
+
+# Labeling the countplot
+plt.title('Applications by Congressional Districts')
+plt.xlabel('Count')
+plt.ylabel('Congressional District')
+plt.show()
+```
+
+![Congressional Count Plot](https://github.com/user-attachments/assets/f4cb8417-7a76-43b6-af41-d911ea8429d4)
 
 
 ### Time Series Analysis
