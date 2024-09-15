@@ -86,12 +86,23 @@ County, Congressional, State Senate, State House Supplementary: A group of suppl
 
 
 ## Data Cleaning and Manipulation
+### Renaming the Dataset
+For the sake of simplifying our SQL queries, we should rename the dataset into something shorter instead.
+```sql
+-- Renaming the dataset to a shorter name
+ALTER TABLE [2020_General_Election_Mail_Ballot_Requests_Department_of_State_20240914] RENAME TO GeneralBallots;
+```
+
+
+
+</br>
+
 ### Date Parsing
-In order to better analyze the dates in SQL, we need
+In order to better analyze the dates in SQL, we must first change the format of the dataes from MM/DD/YYYY into YYYY-MM-DD. Using the Subscript function in SQL, we can rearrange the numbers so that this is the case.
 
 ```sql
--- Change all the date columns from MM/DD/YYYY to YYYY-MM-DD.
-UPDATE Playground
+-- Modfiying all the date columns from MM/DD/YYYY to YYYY-MM-DD.
+UPDATE GeneralBallots
 SET 
     DateofBirth = SUBSTR(DateofBirth, 7, 4) || '-' || SUBSTR(DateofBirth, 1, 2) || '-' || SUBSTR(DateofBirth, 4, 2),
     ApplicationApprovedDate = SUBSTR(ApplicationApprovedDate, 7, 4) || '-' || SUBSTR(ApplicationApprovedDate, 1, 2) || '-' || SUBSTR(ApplicationApprovedDate, 4, 2),
@@ -101,10 +112,50 @@ SET
 
 ```
 
+</br>
 
-#### Handling Outliers
+Now we should check to make sure that it worked.
+
+```sql
+-- Sampling the date columns to see that the columns were changed correctly.
+Select DateofBirth, ApplicationApprovedDate, ApplicationReturnDate, BallotMailedDate, BallotReturnedDate 
+from GeneralBallots
+limit 5;
+```
+
+</br>
 
 
+![Changed Columns](https://github.com/user-attachments/assets/6c5e7051-24cc-415a-ba3f-6475b584f320)
+
+</br>
+As we can see the format has been correctly altered.
+
+### Handling Date Outliers
+#### Date of Birth
+For analysis it is best that we check the date columns to find if there any outliers that would not be explained by some other factor, such as applicants whose date of birth being in the 1800s or very early 1900s being Pennsylvanians whose ages are specifically kept confidential from the public. First we should make sure that all applicants would be eligible to vote on election day (November 3, 2020), due to being at eighteen years of age on the day.
+
+```sql
+-- Checking the youngest applicants.
+Select DateofBirth from GeneralBallots
+order by DateofBirth desc
+limit 50;
+```
+
+</br>
+
+![Youngest Applicants](https://github.com/user-attachments/assets/589086fa-85fa-4647-87df-c88d90cab3d0)
+
+</br>
+
+There only seems to be one person who is too young to vote, being born on 2006. Therefore, we should remove this error from the dataset
+
+```sql
+-- Deleting the outlier
+DELETE FROM GeneralBallots WHERE DateofBirth = '2006-07-14';
+```
+
+#### Application Return/Processing
 ### Calculating Ages
 
 
@@ -126,6 +177,9 @@ Update Jou set BirthYear = SUBSTR(DateofBirth, 1, 4);
 
 ## Exploratory Data Analysis
 ### Descriptive Statistics
+
+
+### Univariate Analysis 
 
 
 ### Distribution Analysis
@@ -156,6 +210,7 @@ Update Jou set BirthYear = SUBSTR(DateofBirth, 1, 4);
 
 
 ## Results
-
+### Common Insights
+### Interactive Tableau Dashboard
 
 ## Licenses
