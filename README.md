@@ -156,9 +156,43 @@ DELETE FROM GeneralBallots WHERE DateofBirth = '2006-07-14';
 ```
 
 #### Application Return/Processing
+Similar to the date of birth, we should make sure that all of the applications were approved and returned in a date is in a plausible range. Dates outside of this range may indicate an error or anomaly in the data entry. Such outliers might distort the analysis and effect its overall accuracy.
+
+
+To maintain accuracy and data integrity, we must records with approval or return dates that fall outside of 2019 or 2020. By doing this we keep our data integrity high, and the insights from our analysis more accurate. Especially for such a large dataset. 
+
+```sql
+-- Deleting large outliers from the application dates
+Delete from GeneralBallots 
+where (ApplicationApprovedDate not like '2020%' AND ApplicationApprovedDate not like '2019%') 
+and (ApplicationReturnDate not like '2020%' AND ApplicationReturnDate not like '2019%');
+```
+
 ### Calculating Ages
+Now that any egregious outlier in the date columns have been cleaned, we have the ability to calculate each applicant's age based on how old they would be on election day.
 
 
+First we must create an integer column for Age.
+
+</br>
+
+```sql
+-- Creating an age column
+ALTER TABLE GeneralBallots ADD COLUMN Age INTEGER;
+```
+</br>
+
+
+Now that it has been created we must populate the column with the age of each applicant by subtracting the years between their birth and election day.
+
+```sql
+-- Populating the age column by updating the column to find the years between election day and date of birth
+UPDATE GeneralBallots
+SET Age = (
+    CAST(
+        (JULIANDAY('2020-11-03') - JULIANDAY(DateofBirth)) / 365.25 AS INTEGER
+    )
+);```
 
 
 ### Generation Assignment
