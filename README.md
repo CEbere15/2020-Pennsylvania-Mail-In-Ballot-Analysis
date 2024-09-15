@@ -192,19 +192,137 @@ SET Age = (
     CAST(
         (JULIANDAY('2020-11-03') - JULIANDAY(DateofBirth)) / 365.25 AS INTEGER
     )
-);```
+);
+```
 
+Now we can test how well the command executed.
+
+```sql
+Select CountyName, DateofBirth, Age from GeneralBallots limit 5
+```
+
+
+![Age Test](https://github.com/user-attachments/assets/93f03388-c529-49cd-918b-5a7eb9bbd464)
+
+As we can see the age for applicants was calculated correctly.
 
 ### Generation Assignment
-To find the generation that each applicant belongs to, it is best that we make a column for their birth year.
+To find the generation that each applicant belongs to, it is best that we make a column for their birth year, from taking it from their date of birth.
 ```sql
 -- Creates the birth year column
-ALTER TABLE Jou ADD COLUMN BirthYear INTEGER;
+ALTER TABLE GeneralBallots ADD COLUMN BirthYear INTEGER;
 
 
 -- Makes the value of the column the year that the person was born
-Update Jou set BirthYear = SUBSTR(DateofBirth, 1, 4);
+Update GeneralBallots set BirthYear = SUBSTR(DateofBirth, 1, 4);
 ```
+
+
+Now to test if it executed correctly.
+
+![Birth Year Test](https://github.com/user-attachments/assets/f83f67b6-ee15-480b-978f-4f71a7d530e1)
+
+
+</br>
+
+Now that there is a Birth Year column, we can sort each applicant into a genertiion based on that year.
+
+
+To make sure that we accurately tabulate the amount of members of the Greatest Generation there are, the cutoff year is 1908, which was the year the oldest known living Pennsylvanian was born in the beginning of 2020. Anyone born before then is placed into the Unknown section. 
+
+```sql
+-- Create a column for Generation
+ALTER TABLE GeneralBallots ADD COLUMN Generation INTEGER;
+
+-- Populating the Generation column by setting a generation by birth year
+UPDATE GeneralBallots
+SET Generation = 
+    CASE WHEN BirthYear BETWEEN '1928' AND '1945' THEN 'Silent Generation'
+        WHEN BirthYear BETWEEN '1908' AND '1927' THEN 'Greatest Generation'
+        WHEN BirthYear BETWEEN '1946' AND '1964' THEN 'Baby Boomers'
+        WHEN BirthYear BETWEEN '1965' AND '1980' THEN 'Generation X'
+        WHEN BirthYear BETWEEN '1981' AND '1996' THEN 'Millennials'
+        WHEN BirthYear BETWEEN '1997' AND '2012' THEN 'Generation Z'
+        WHEN BirthYear >= '2013' THEN 'Generation Alpha'
+        ELSE 'Unknown'
+    END
+```
+
+</br>
+
+Now that the column has been populated let us make sure that it is worked.
+
+
+![Generation Test](https://github.com/user-attachments/assets/b6d8f3c7-f0b5-4b85-bab1-9e87bc4473d8)
+
+As we can see the generation column was made correctly
+
+
+### Party Grouping
+
+To make it easier to analyze different party performances it makes sense to group the amount of parties, in which there are many, into different categories.
+
+First let us get a feel of the multiple parties by making a query that joins with the Party Codes, to give the 
+
+```sql
+-- Use a join to show the name of the party and its designation and how common it is.
+SELECT PoliticalPartyDescription, ApplicantPartyDesignation, COUNT(*) AS count
+FROM GeneralBallots
+inner join [Party Codes] on [Party Codes].Code = GeneralBallots.ApplicantPartyDesignation
+GROUP BY [ApplicantPartyDesignation] order by Count desc;
+```
+![Des and Name Check](https://github.com/user-attachments/assets/593508f2-c55e-4e32-934e-6370cc465e93)
+
+
+As we can see, most of the applicants are part of the Top 10 designations. Meaning that it is better to group up the hundreds into just a few. The best categories would most likely be Democratic, Republican, Libertarian, Independent, Green and Minor Party
+
+
+
+These queries will create a column for Party Category and group all the parties into the aforementioned categories.
+
+```sql
+-- Create a column for Party Category
+ALTER TABLE GeneralBallots ADD COLUMN Category INTEGER;
+
+-- Populating the party category by setting them by party designation
+UPDATE GeneralBallots
+SET Category = 
+Case when ApplicantPartyDesignation = 'D' then 'Democratic'
+when ApplicantPartyDesignation in ('GOP','R') then 'Republican'
+when ApplicantPartyDesignation in ('NF','I','NOP','NO','OTH','INDE','NON') then 'Independent'
+when ApplicantPartyDesignation in ('GPUS','GR','GP') then 'Green'
+when ApplicantPartyDesignation in ('LN') then 'Libertarian'
+else 'Minor Party' end
+```
+
+</br>
+
+Now to test if the new column was made correctly.
+```sql
+Select CountyName, ApplicantPartyDesignation, Category from GeneralBallots limit 20;
+```
+
+![Party Category Test](https://github.com/user-attachments/assets/14bf3eb0-cbec-4d94-bedb-e92da2887fb8)
+
+As we can see, the Category column matches up with the designation. 
+### Application Grouping
+To better analyze the different methods of mail in voting that were applied for, it is best we group them into categories such as paper, mailed, overseas and online. The following query will create a column for Application Category and populate it by what the Application Type is.
+
+```sql
+-- Create a column for Party Category
+ALTER TABLE GeneralBallots ADD COLUMN [Application Category] INTEGER;
+
+-- Populating the party category by setting them by party designation
+UPDATE GeneralBallots
+SET [Application Category] = 
+Case when MailApplicationType in 'D' then 'Democratic'
+when ApplicantPartyDesignation in ('GOP','R') then 'Republican'
+when ApplicantPartyDesignation in ('NF','I','NOP','NO','OTH','INDE','NON') then 'Independent'
+when ApplicantPartyDesignation in ('GPUS','GR','GP') then 'Green'
+when ApplicantPartyDesignation in ('LN') then 'Libertarian'
+else 'Minor Party' end```
+
+
 
 
 
@@ -213,11 +331,11 @@ Update Jou set BirthYear = SUBSTR(DateofBirth, 1, 4);
 ### Descriptive Statistics
 
 
-### Univariate Analysis 
 
 
 ### Distribution Analysis
 
+### Univariate Analysis 
 
 
 ### Time Series Analysis
