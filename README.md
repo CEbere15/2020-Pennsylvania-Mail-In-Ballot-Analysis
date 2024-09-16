@@ -360,6 +360,13 @@ plt.show()
 ```
 ![Age Distributiion](https://github.com/user-attachments/assets/c11983a8-3869-4769-9872-bebf78277147)
 
+#### Age by County
+```py
+boxplot = data.query("Generation != 'Unknown'").boxplot(column='Age', by='CountyName', vert= False, figsize=(60,60))
+```
+
+![Ages by County](https://github.com/user-attachments/assets/3c0b6ce7-8bb4-4032-870e-8c9dbe38ac7e)
+
 
 ### Univariate Analysis
 #### Generation
