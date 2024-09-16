@@ -361,7 +361,30 @@ plt.show()
 ![Age Distributiion](https://github.com/user-attachments/assets/c11983a8-3869-4769-9872-bebf78277147)
 
 
-### Univariate Analysis 
+### Univariate Analysis
+#### Generation
+```py
+# Creation of an order for Generation
+GenOrd = data['Generation'].value_counts().index
+
+# Creating a figure size for the count plot
+plt.figure(figsize=(20, 10))
+
+# Creating the Countplot
+sns.countplot(y='Generation', data=data, order=GenOrd, palette='crest')
+
+# Labeling the countplot
+plt.title('Generation Count')
+plt.xlabel('Count')
+plt.ylabel('Generation')
+plt.show()
+```
+
+It's clear from the plot that the most common Generation to apply for mail in ballots are Baby Boomers. Beating out Millenials by about 400,000 applications. Behind them are Generation X, the Silent Generation, Generation Z and the Greatest Generation. The fact that older generations are so readily voting by mail could have to do with COVID making it the preferred options for those generations. 
+
+
+![Generation Count](https://github.com/user-attachments/assets/07074db9-c156-4068-bded-2b0051ac999a)
+
 #### Congressional Districts
 
 ```py
@@ -380,8 +403,70 @@ plt.xlabel('Count')
 plt.ylabel('Congressional District')
 plt.show()
 ```
+The 3rd Congressional District has the most applicants from there than any other district, followed not far behind by the 18th and 4th respectively. However, the top three districts with the least applicants from there, 15th, 12th and 13th have less than half of the applications as the Top 3. This is despite the fact that Congressional Districts have populations that are virtually identical to one another. Meaning for what ever reason some districts have more people apply for mail in ballots than others. Which could mean that there are some regional factors at work here. Population density could mean that more rural or exurban districts have less sophisticated mailing systems. Which means people are less likely to choose to vote by mail and instead just vote in person due to being less at risk for COVID, not having a sophisticated system for mail in voting, and it being cheaper for them to do.  
+
 
 ![Congressional Count Plot](https://github.com/user-attachments/assets/f4cb8417-7a76-43b6-af41-d911ea8429d4)
+
+
+#### Application Category
+```py
+
+# Creation of an order for Application Categories
+AppOrd = data['Application Category'].value_counts().index
+
+# Creating a figure size for the count plot
+plt.figure(figsize=(20, 10))
+
+# Creating the Countplot
+sns.countplot(y='Application Category', data=data, order=AppOrd, palette='crest')
+
+# Labeling the countplot
+plt.title('Application Category Count')
+plt.xlabel('Count')
+plt.ylabel('Application Category')
+plt.show()
+
+```
+
+</br>
+
+
+![Application Category Count](https://github.com/user-attachments/assets/068679f9-7bc9-4d38-821c-421e303aac17)
+
+
+</br>
+
+From this count plot, it looks the most common method of applying is through online methods by a rather wide margin. The second most common method is Mailed applications. The distant third and fourth are paper applications and overseas. Which would make sense, seeing as most voters would likely be in-state and not overseas during voting season. The fact that online and mail are so common, likely has to do with COVID making these the most convenient options for many voters. 
+#### Party Category
+
+```py
+
+
+
+# Creation of an order for Party Categories
+PartOrd = data['Category'].value_counts().index
+
+# Creating a figure size for the count plot
+plt.figure(figsize=(20, 10))
+
+# Creating the Countplot
+sns.countplot(y='Category', data=data, order=PartOrd, palette='crest')
+
+# Labeling the countplot
+plt.title('Party Category Count')
+plt.xlabel('Count')
+plt.ylabel('Application Category')
+plt.show()
+
+
+
+```
+
+![Party Count Plot](https://github.com/user-attachments/assets/3ede6f46-7e51-4729-9692-73f7db7e03f5)
+
+This plot shows that a registered Democrats were a majority of the applicants for mail ballots. With registered Republicans being a very distant, but clear second, followed by Independents. The final three (Minor Parties, Green, Libertarian), were a very small share of the applicants for mail ballots. 
+</br>
 
 
 ### Time Series Analysis
