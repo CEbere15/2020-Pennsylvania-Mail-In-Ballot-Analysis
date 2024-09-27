@@ -245,12 +245,18 @@ SET Generation =
         WHEN BirthYear BETWEEN '1997' AND '2012' THEN 'Generation Z'
         WHEN BirthYear >= '2013' THEN 'Generation Alpha'
         ELSE 'Unknown'
-    END
+    END;
 ```
 
 </br>
 
 Now that the column has been populated let us make sure that it is worked.
+
+```sql
+Select CountyName, DateofBirth, BirthYear, Age, Generation
+from GeneralBallots
+limit 10;
+```
 
 
 ![Generation Test](https://github.com/user-attachments/assets/b6d8f3c7-f0b5-4b85-bab1-9e87bc4473d8)
@@ -262,7 +268,7 @@ As we can see the generation column was made correctly
 
 To make it easier to analyze different party performances it makes sense to group the amount of parties, in which there are many, into different categories.
 
-First let us get a feel of the multiple parties by making a query that joins with the Party Codes, to give the 
+First let us get a feel of the multiple parties by making a query that joins with the Party Codes, to give the name of the abbreviated party registration.
 
 ```sql
 -- Use a join to show the name of the party and its designation and how common it is.
@@ -294,7 +300,7 @@ when ApplicantPartyDesignation in ('GOP','R') then 'Republican'
 when ApplicantPartyDesignation in ('NF','I','NOP','NO','OTH','INDE','NON') then 'Independent'
 when ApplicantPartyDesignation in ('GPUS','GR','GP') then 'Green'
 when ApplicantPartyDesignation in ('LN') then 'Libertarian'
-else 'Minor Party' end
+else 'Minor Party' end;
 ```
 
 </br>
